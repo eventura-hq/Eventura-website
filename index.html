@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en" class="light scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVENTURA — Luxury Event Planning Atelier</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            deep: '#062016',
+                            DEFAULT: '#144033',
+                            light: '#235D4B',
+                            soft: '#F2F7F5',
+                            glow: 'rgba(20, 64, 51, 0.28)'
+                        },
+                        gold: {
+                            light: '#F8ECCE',
+                            DEFAULT: '#D4AF37',
+                            metallic: '#C5A059',
+                            dark: '#9A7722',
+                            glow: 'rgba(212, 175, 55, 0.35)'
+                        },
+                        alabaster: {
+                            DEFAULT: '#FAF8F5',
+                            card: '#FFFFFF',
+                            muted: '#F4EFE6'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Cinzel Decorative', 'Georgia', 'serif'],
+                        calligraphy: ['Great Vibes', 'Alex Brush', 'Playfair Display', 'cursive'],
+                        cinzel: ['Cinzel Decorative', 'Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'luxury-gold': '0 10px 30px rgba(212, 175, 55, 0.28)',
+                        'emerald-glow': '0 12px 30px rgba(6, 32, 22, 0.25)',
+                        'card-light': '0 20px 45px rgba(6, 32, 22, 0.07)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel+Decorative:wght@400;700;900&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #FAF8F5;
+            color: #062016;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-calligraphy { font-family: 'Great Vibes', 'Alex Brush', cursive; }
+        .font-cinzel { font-family: 'Cinzel Decorative', 'Cinzel', serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* Fancy Calligraphic Text Gradients */
+        .calligraphy-gold-text {
+            background: linear-gradient(135deg, #E6CA65 0%, #D4AF37 50%, #9A7722 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .emerald-gradient-text {
+            background: linear-gradient(135deg, #062016 0%, #144033 60%, #235D4B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Fancy Ornate Calligraphic Border & Corner Frame Styling */
+        .fancy-calligraphic-border {
+            border: 2px solid #D4AF37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12), 0 15px 35px rgba(6, 32, 22, 0.08);
+            position: relative;
+        }
+
+        .gold-corner-box {
+            position: relative;
+        }
+        .gold-corner-box::before {
+            content: '𝔈';
+            position: absolute;
+            top: -12px; left: -10px;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 20px;
+            color: #D4AF37;
+            line-height: 1;
+            z-index: 10;
+            background: #FFFFFF;
+            padding: 0 4px;
+        }
+        .gold-corner-box::after {
+            content: '❖';
+            position: absolute;
+            bottom: -8px; right: -8px;
+            font-size: 14px;
+            color: #D4AF37;
+            z-index: 10;
+            background: #FFFFFF;
+            padding: 0 4px;
+        }
+
+        /* Luxury Input & Textbox Ornate Styling */
+        .luxury-input-border {
+            border: 1.5px solid #D4AF37 !important;
+            background-color: #FFFFFF !important;
+            box-shadow: inset 0 2px 5px rgba(6, 32, 22, 0.03), 0 0 0 2px rgba(212, 175, 55, 0.15);
+            transition: all 0.3s ease;
+        }
+        .luxury-input-border:focus {
+            outline: none !important;
+            border-color: #062016 !important;
+            box-shadow: 0 0 15px rgba(20, 64, 51, 0.25), inset 0 2px 4px rgba(6, 32, 22, 0.02) !important;
+        }
+
+        /* Dramatic Reveal Animation for Reservation Section */
+        .dramatic-stage {
+            opacity: 0;
+            transform: translateY(50px) scale(0.97);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: blur(6px);
+        }
+        .dramatic-stage.revealed {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        /* Active Calendar Day Styling */
+        .cal-day-active {
+            background: linear-gradient(135deg, #144033 0%, #062016 100%) !important;
+            color: #FFFFFF !important;
+            font-weight: 800 !important;
+            box-shadow: 0 0 20px rgba(20, 64, 51, 0.4);
+            border: 1.5px solid #D4AF37 !important;
+        }
+
+        /* Print View Rules for Reservation Spec Draft */
+        @media print {
+            body { background-color: #ffffff !important; color: #000000 !important; }
+            #bgCanvas, header, footer, #mobileMenu, #detailsModal, #confirmationModal, .no-print, #process, #about, #events, #contact { display: none !important; }
+            #reserve { padding: 0 !important; }
+            .lg\:col-span-8, #stepIndicators { display: none !important; }
+            .lg\:col-span-4 {
+                width: 100% !important;
+                border: 2px solid #144033 !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+                box-shadow: none !important;
+            }
+            .text-emerald-deep, .text-gray-600 { color: #144033 !important; }
+            .text-gold, .calligraphy-gold-text { color: #9A7722 !important; -webkit-text-fill-color: #9A7722 !important; }
+            .print-header-show { display: block !important; text-align: center; margin-bottom: 20px; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #FAF8F5; }
+        ::-webkit-scrollbar-thumb { background: #144033; border-radius: 3px; }
+    </style>
+</head>
+<body class="selection:bg-emerald selection:text-white">
+
+    <canvas id="bgCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-gold/40 bg-white/95 backdrop-blur-md shadow-sm" id="mainHeader">
+        <div class="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 border-1.5 border-gold bg-emerald-deep flex items-center justify-center text-gold group-hover:bg-gold group-hover:text-emerald-deep transition-all shadow-sm">
+                    <span class="font-calligraphy text-2xl font-bold">E</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-cinzel text-xl tracking-[0.2em] font-bold text-emerald-deep group-hover:text-gold-dark transition-colors">EVENTURA</span>
+                    <span class="font-calligraphy text-base leading-3 text-gold-dark font-medium capitalize">Luxury Event Atelier</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-8 font-sans text-xs font-bold uppercase tracking-widest text-emerald-deep">
+                <a href="#about" class="hover:text-gold-dark transition-colors py-1 relative group">
+                    About
+                    <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#process" class="hover:text-gold-dark transition-colors py-1 relative group">
+                    Our Process
+                    <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#events" class="hover:text-gold-dark transition-colors py-1 relative group">
+                    Portfolio
+                    <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#reserve" class="hover:text-gold-dark transition-colors py-1 relative group">
+                    Reserve
+                    <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#contact" class="hover:text-gold-dark transition-colors py-1 relative group">
+                    Contact
+                    <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+
+            <div class="hidden md:block">
+                <a href="#reserve" class="inline-flex items-center justify-center px-6 py-2.5 text-xs font-bold tracking-widest text-white uppercase transition-all duration-300 bg-emerald-deep hover:bg-emerald hover:shadow-emerald-glow border border-gold">
+                    Book Event Slot
+                </a>
+            </div>
+
+            <button id="mobileMenuBtn" class="md:hidden text-emerald-deep hover:text-gold text-2xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-gold/30 px-6 py-6 space-y-4 font-sans text-xs shadow-lg">
+            <a href="#about" class="block uppercase tracking-widest text-emerald-deep hover:text-gold font-bold">About Atelier</a>
+            <a href="#process" class="block uppercase tracking-widest text-emerald-deep hover:text-gold font-bold">Our Process</a>
+            <a href="#events" class="block uppercase tracking-widest text-emerald-deep hover:text-gold font-bold">Portfolio Showcase</a>
+            <a href="#reserve" class="block uppercase tracking-widest text-emerald-deep hover:text-gold font-bold">Reserve Calendar</a>
+            <a href="#contact" class="block uppercase tracking-widest text-emerald-deep hover:text-gold font-bold">Contact Concierge</a>
+            <a href="#reserve" class="inline-block w-full text-center py-3 font-bold bg-emerald-deep text-white uppercase tracking-widest border border-gold">Reserve Slot Now</a>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+
+        <section id="about" class="min-h-screen pt-32 pb-24 flex items-center justify-center relative overflow-hidden px-6">
+            
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=2000" alt="Calligraphic Luxury Event Decor" class="w-full h-full object-cover object-center filter contrast-105 brightness-90">
+                <div class="absolute inset-0 bg-gradient-to-b from-alabaster/95 via-alabaster/85 to-alabaster"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#FAF8F5_85%)]"></div>
+            </div>
+
+            <div class="max-w-5xl mx-auto text-center space-y-8 relative z-10">
+                
+                <div class="inline-flex items-center gap-2.5 px-6 py-2 bg-white border-1.5 border-gold text-emerald-deep font-cinzel text-xs uppercase tracking-[0.3em] shadow-card-light">
+                    <i class="fa-solid fa-gem text-xs text-gold"></i>
+                    <span>Bespoke Luxury Event Planning</span>
+                </div>
+
+                <div class="space-y-2">
+                    <p class="font-calligraphy text-4xl sm:text-6xl text-gold-dark font-normal">Crafting Unforgettable Moments</p>
+                    <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-emerald-deep leading-[1.12]">
+                        Tailored Celebrations <br>
+                        <span class="calligraphy-gold-text font-calligraphy text-5xl sm:text-7xl md:text-8xl capitalize font-normal">Designed Around Your Budget</span>
+                    </h1>
+                </div>
+
+                <p class="text-emerald-deep/85 text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-3xl mx-auto tracking-wide">
+                    At <strong class="text-emerald-deep font-bold font-serif">EVENTURA</strong>, we operate as a dedicated boutique planning studio in Sri Lanka. We take pride in customizing every wedding, milestone birthday, anniversary, and private party to fit your exact budget expectations without ever compromising on calligraphic artistry, beauty, or luxury.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-5 pt-4 font-sans text-xs font-bold">
+                    <a href="#reserve" class="w-full sm:w-auto px-10 py-4 bg-emerald-deep hover:bg-emerald text-white uppercase tracking-[0.25em] border border-gold shadow-emerald-glow transition-all duration-300">
+                        Reserve Event Date
+                    </a>
+                    <a href="#process" class="w-full sm:w-auto px-10 py-4 border-1.5 border-gold bg-white hover:bg-emerald-soft text-emerald-deep uppercase tracking-[0.25em] transition-all duration-300">
+                        Our Planning Process
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="py-24 px-6 relative bg-emerald-soft/50 border-y border-gold/30">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center space-y-3 mb-16">
+                    <p class="font-calligraphy text-3xl sm:text-4xl text-gold-dark font-normal">Bespoke Collaboration</p>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-emerald-deep tracking-wide">Our Planning Process</h2>
+                    <p class="text-emerald-deep/75 text-xs sm:text-sm max-w-xl mx-auto font-medium">
+                        As a boutique planning studio, we offer direct hands-on guidance. Every detail is fully customizable according to your available budget.
+                    </p>
+                    <div class="text-gold font-calligraphy text-2xl">~ ❖ ~</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <div class="bg-white border-1.5 border-gold/50 p-8 gold-corner-box shadow-card-light hover:border-emerald transition-all duration-300 flex flex-col justify-between space-y-6">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 bg-emerald-deep border border-gold flex items-center justify-center text-gold font-calligraphy text-2xl font-bold shadow-sm">
+                                1
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-emerald-deep">Budget & Vision Session</h3>
+                            <p class="text-emerald-deep/75 text-xs leading-relaxed">
+                                We start with an open consultation to understand your exact event vision and available budget scale (from budget-friendly setups to grand celebrations).
+                            </p>
+                        </div>
+                        <div class="text-xs text-emerald font-calligraphy font-semibold pt-4 border-t border-gold/20 flex items-center gap-1.5">
+                            <i class="fa-solid fa-calculator text-gold-dark text-[10px]"></i> 100% Budget Customizable
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-1.5 border-gold/50 p-8 gold-corner-box shadow-card-light hover:border-emerald transition-all duration-300 flex flex-col justify-between space-y-6">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 bg-emerald-deep border border-gold flex items-center justify-center text-gold font-calligraphy text-2xl font-bold shadow-sm">
+                                2
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-emerald-deep">Curated Concept Proposal</h3>
+                            <p class="text-emerald-deep/75 text-xs leading-relaxed">
+                                Our team crafts a custom decor package, stage styling options, and vendor recommendations aligned specifically with your specified budget limit.
+                            </p>
+                        </div>
+                        <div class="text-xs text-emerald font-calligraphy font-semibold pt-4 border-t border-gold/20 flex items-center gap-1.5">
+                            <i class="fa-solid fa-palette text-gold-dark text-[10px]"></i> Tailored Decor Options
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-1.5 border-gold/50 p-8 gold-corner-box shadow-card-light hover:border-emerald transition-all duration-300 flex flex-col justify-between space-y-6">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 bg-emerald-deep border border-gold flex items-center justify-center text-gold font-calligraphy text-2xl font-bold shadow-sm">
+                                3
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-emerald-deep">Date Lock & Preparation</h3>
+                            <p class="text-emerald-deep/75 text-xs leading-relaxed">
+                                Lock in your preferred date on our reservation calendar. We manage supplier bookings, venue layout setup, sound, lighting, and timeline details.
+                            </p>
+                        </div>
+                        <div class="text-xs text-emerald font-calligraphy font-semibold pt-4 border-t border-gold/20 flex items-center gap-1.5">
+                            <i class="fa-solid fa-calendar-check text-gold-dark text-[10px]"></i> Dedicated Calendar Slot
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-1.5 border-gold/50 p-8 gold-corner-box shadow-card-light hover:border-emerald transition-all duration-300 flex flex-col justify-between space-y-6">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 bg-emerald-deep border border-gold flex items-center justify-center text-gold font-calligraphy text-2xl font-bold shadow-sm">
+                                4
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-emerald-deep">Seamless Day Execution</h3>
+                            <p class="text-emerald-deep/75 text-xs leading-relaxed">
+                                On your special day, our planners coordinate all decor setups, stage backdrops, catering flow, and sound check so you can enjoy stress-free.
+                            </p>
+                        </div>
+                        <div class="text-xs text-emerald font-calligraphy font-semibold pt-4 border-t border-gold/20 flex items-center gap-1.5">
+                            <i class="fa-solid fa-wand-magic-sparkles text-gold-dark text-[10px]"></i> Stress-Free Experience
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="events" class="py-24 px-6 relative bg-alabaster">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center space-y-3 mb-16">
+                    <p class="font-calligraphy text-3xl sm:text-4xl text-gold-dark font-normal">Tailored Packages</p>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-emerald-deep tracking-wide">Celebration Services</h2>
+                    <div class="text-gold font-calligraphy text-2xl">~ ❖ ~</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <div class="group relative bg-white p-8 border-1.5 border-gold/40 hover:border-emerald transition-all duration-500 flex flex-col justify-between hover:shadow-card-light gold-corner-box">
+                        <div class="h-36 relative flex items-center justify-center bg-emerald-soft border border-gold/30 mb-6 group-hover:border-gold transition-colors">
+                            <div class="w-20 h-20 rounded-full border-1.5 border-gold flex items-center justify-center bg-white text-emerald-deep group-hover:scale-110 group-hover:bg-emerald-deep group-hover:text-gold transition-all duration-300 shadow-sm">
+                                <i class="fa-solid fa-crown text-3xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-4 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="font-calligraphy text-xl text-gold-dark">Royalty & Elegance</p>
+                                <h3 class="font-serif text-2xl text-emerald-deep font-bold group-hover:text-gold-dark transition-colors">Grand Weddings</h3>
+                                <p class="text-emerald-deep/75 text-xs mt-2 leading-relaxed">
+                                    Floral stage backdrops, settee & poruwa styling, sound system, and full day-of coordination designed around your budget.
+                                </p>
+                            </div>
+                            <button onclick="openModal('wedding')" class="w-full py-3 font-sans text-xs uppercase tracking-widest border border-emerald text-emerald hover:bg-emerald hover:text-white font-bold transition-all">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="group relative bg-white p-8 border-1.5 border-gold/40 hover:border-emerald transition-all duration-500 flex flex-col justify-between hover:shadow-card-light gold-corner-box">
+                        <div class="h-36 relative flex items-center justify-center bg-emerald-soft border border-gold/30 mb-6 group-hover:border-gold transition-colors">
+                            <div class="w-20 h-20 rounded-full border-1.5 border-gold flex items-center justify-center bg-white text-emerald-deep group-hover:scale-110 group-hover:bg-emerald-deep group-hover:text-gold transition-all duration-300 shadow-sm">
+                                <i class="fa-solid fa-cake-candles text-3xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-4 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="font-calligraphy text-xl text-gold-dark">Joyous Galas</p>
+                                <h3 class="font-serif text-2xl text-emerald-deep font-bold group-hover:text-gold-dark transition-colors">Birthday Parties</h3>
+                                <p class="text-emerald-deep/75 text-xs mt-2 leading-relaxed">
+                                    Fun thematic backdrops, DJ & music setups, custom cake table arrangements, and party photography options.
+                                </p>
+                            </div>
+                            <button onclick="openModal('birthday')" class="w-full py-3 font-sans text-xs uppercase tracking-widest border border-emerald text-emerald hover:bg-emerald hover:text-white font-bold transition-all">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="group relative bg-white p-8 border-1.5 border-gold/40 hover:border-emerald transition-all duration-500 flex flex-col justify-between hover:shadow-card-light gold-corner-box">
+                        <div class="h-36 relative flex items-center justify-center bg-emerald-soft border border-gold/30 mb-6 group-hover:border-gold transition-colors">
+                            <div class="w-20 h-20 rounded-full border-1.5 border-gold flex items-center justify-center bg-white text-emerald-deep group-hover:scale-110 group-hover:bg-emerald-deep group-hover:text-gold transition-all duration-300 shadow-sm">
+                                <i class="fa-solid fa-infinity text-3xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-4 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="font-calligraphy text-xl text-gold-dark">Timeless Romance</p>
+                                <h3 class="font-serif text-2xl text-emerald-deep font-bold group-hover:text-gold-dark transition-colors">Anniversaries</h3>
+                                <p class="text-emerald-deep/75 text-xs mt-2 leading-relaxed">
+                                    Intimate milestone celebrations with table decor, warm fairy lights, acoustic music systems, and entrance arches.
+                                </p>
+                            </div>
+                            <button onclick="openModal('anniversary')" class="w-full py-3 font-sans text-xs uppercase tracking-widest border border-emerald text-emerald hover:bg-emerald hover:text-white font-bold transition-all">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="group relative bg-white p-8 border-1.5 border-gold/40 hover:border-emerald transition-all duration-500 flex flex-col justify-between hover:shadow-card-light gold-corner-box">
+                        <div class="h-36 relative flex items-center justify-center bg-emerald-soft border border-gold/30 mb-6 group-hover:border-gold transition-colors">
+                            <div class="w-20 h-20 rounded-full border-1.5 border-gold flex items-center justify-center bg-white text-emerald-deep group-hover:scale-110 group-hover:bg-emerald-deep group-hover:text-gold transition-all duration-300 shadow-sm">
+                                <i class="fa-solid fa-masks-theater text-3xl"></i>
+                            </div>
+                        </div>
+                        <div class="space-y-4 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="font-calligraphy text-xl text-gold-dark">Exclusive Soirées</p>
+                                <h3 class="font-serif text-2xl text-emerald-deep font-bold group-hover:text-gold-dark transition-colors">Private Get-Togethers</h3>
+                                <p class="text-emerald-deep/75 text-xs mt-2 leading-relaxed">
+                                    Hassle-free family get-togethers, buffet setup, seating arrangements, sound equipment, and party favors.
+                                </p>
+                            </div>
+                            <button onclick="openModal('private')" class="w-full py-3 font-sans text-xs uppercase tracking-widest border border-emerald text-emerald hover:bg-emerald hover:text-white font-bold transition-all">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="reserve" class="py-28 px-6 relative overflow-hidden bg-white border-t border-gold/30">
+            
+            <div class="max-w-7xl mx-auto dramatic-stage relative z-10" id="calendarContainer">
+                
+                <div class="text-center space-y-3 mb-12">
+                    <p class="font-calligraphy text-3xl sm:text-5xl text-gold-dark font-normal">VIP Reservation Suite</p>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-emerald-deep tracking-wide">
+                        Reserve Your <span class="calligraphy-gold-text font-calligraphy font-normal capitalize">Event Date</span>
+                    </h2>
+                    <p class="text-emerald-deep/75 text-xs sm:text-sm max-w-xl mx-auto font-medium">
+                        Select a date on our live calendar, input your available event budget in Sri Lankan Rupees, and generate your instant spec draft.
+                    </p>
+                </div>
+
+                <!-- Guided 3-Step Header -->
+                <div id="stepIndicators" class="grid grid-cols-3 gap-3 mb-10 max-w-2xl mx-auto text-center font-sans">
+                    <div id="step1Indicator" class="p-3 bg-emerald-deep border-1.5 border-gold text-white shadow-emerald-glow">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-gold">// STEP 1</p>
+                        <p class="text-xs font-semibold text-white mt-0.5" id="step1Text">Date: Oct 24</p>
+                    </div>
+                    <div id="step2Indicator" class="p-3 bg-emerald-soft border border-gold/30 text-emerald-deep">
+                        <p class="text-[10px] font-bold uppercase tracking-widest">// STEP 2</p>
+                        <p class="text-xs font-semibold text-emerald-deep mt-0.5" id="step2Text">Royal Wedding</p>
+                    </div>
+                    <div id="step3Indicator" class="p-3 bg-emerald-soft border border-gold/30 text-emerald-deep">
+                        <p class="text-[10px] font-bold uppercase tracking-widest">// STEP 3</p>
+                        <p class="text-xs font-semibold text-emerald-deep mt-0.5" id="step3Text">Budget & Slot</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                    <div class="lg:col-span-8 bg-alabaster border-1.5 border-gold/50 p-6 md:p-8 shadow-card-light relative gold-corner-box">
+
+                        <!-- STEP 1: CALENDAR -->
+                        <div class="mb-8">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-cinzel text-xs uppercase tracking-[0.2em] font-bold text-emerald-deep flex items-center gap-2">
+                                    <i class="fa-regular fa-calendar-check text-sm text-gold-dark"></i> STEP 1: SELECT EVENT DATE
+                                </h3>
+                                <div class="flex items-center gap-2 font-sans text-[11px]">
+                                    <span class="text-emerald-deep/70 hidden sm:inline font-medium">Quick Pick:</span>
+                                    <button type="button" onclick="selectQuickDate('sat')" class="px-3 py-1 bg-white border border-gold hover:bg-gold hover:text-emerald-deep text-emerald-deep font-semibold transition-colors shadow-sm">
+                                        Next Saturday
+                                    </button>
+                                    <button type="button" onclick="selectQuickDate('sun')" class="px-3 py-1 bg-white border border-gold hover:bg-gold hover:text-emerald-deep text-emerald-deep font-semibold transition-colors shadow-sm">
+                                        Next Sunday
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Month Controls -->
+                            <div class="flex items-center justify-between mb-4 p-3.5 bg-white border-1.5 border-gold/40 shadow-sm">
+                                <button type="button" id="prevMonth" class="w-8 h-8 border border-gold/50 hover:bg-emerald-deep hover:text-white flex items-center justify-center text-emerald-deep transition-colors bg-emerald-soft">
+                                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                                </button>
+                                <div class="text-center">
+                                    <h4 id="currentMonthYear" class="font-serif text-xl text-emerald-deep font-bold tracking-wide">October 2026</h4>
+                                </div>
+                                <button type="button" id="nextMonth" class="w-8 h-8 border border-gold/50 hover:bg-emerald-deep hover:text-white flex items-center justify-center text-emerald-deep transition-colors bg-emerald-soft">
+                                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                                </button>
+                            </div>
+
+                            <!-- Days Header -->
+                            <div class="grid grid-cols-7 gap-2 text-center font-sans text-[11px] uppercase font-bold text-emerald-deep mb-2 tracking-widest">
+                                <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+                            </div>
+
+                            <!-- Dynamic Calendar Days Grid -->
+                            <div id="calendarDays" class="grid grid-cols-7 gap-2 text-center mb-4 font-sans">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+
+                            <div class="flex items-center justify-center space-x-6 font-sans text-[11px] text-emerald-deep/80 font-medium">
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-emerald-deep rounded-full shadow-emerald-glow"></span> Selected Date</span>
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 bg-white border border-gold/60 rounded-full"></span> Available Slot (100% Open)</span>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2: CELEBRATION TYPE -->
+                        <div class="pt-6 border-t border-gold/30 mb-8">
+                            <h3 class="font-cinzel text-xs uppercase tracking-[0.2em] font-bold text-emerald-deep mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-crown text-sm text-gold-dark"></i> STEP 2: CELEBRATION TYPE
+                            </h3>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="eventTypeCards">
+                                <button type="button" class="event-card-btn p-3.5 border-1.5 border-gold bg-emerald-deep text-white flex flex-col items-center justify-center gap-2 transition-all text-center group shadow-sm" data-value="Royal Wedding">
+                                    <i class="fa-solid fa-ring text-xl text-gold group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-xs font-semibold">Grand Wedding</span>
+                                </button>
+                                <button type="button" class="event-card-btn p-3.5 border border-gold/40 bg-white text-emerald-deep flex flex-col items-center justify-center gap-2 hover:border-gold transition-all text-center group" data-value="Milestone Birthday">
+                                    <i class="fa-solid fa-cake-candles text-xl text-gold-dark group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-xs font-semibold">Birthday Party</span>
+                                </button>
+                                <button type="button" class="event-card-btn p-3.5 border border-gold/40 bg-white text-emerald-deep flex flex-col items-center justify-center gap-2 hover:border-gold transition-all text-center group" data-value="Elite Anniversary">
+                                    <i class="fa-solid fa-infinity text-xl text-gold-dark group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-xs font-semibold">Anniversary</span>
+                                </button>
+                                <button type="button" class="event-card-btn p-3.5 border border-gold/40 bg-white text-emerald-deep flex flex-col items-center justify-center gap-2 hover:border-gold transition-all text-center group" data-value="Private VIP Soirée">
+                                    <i class="fa-solid fa-masks-theater text-xl text-gold-dark group-hover:scale-110 transition-transform"></i>
+                                    <span class="text-xs font-semibold">Private Party</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3: CUSTOMIZABLE BUDGET & LUXURY TEXTBOXES -->
+                        <div class="pt-6 border-t border-gold/30 space-y-6">
+                            <h3 class="font-cinzel text-xs uppercase tracking-[0.2em] font-bold text-emerald-deep flex items-center gap-2">
+                                <i class="fa-solid fa-wallet text-sm text-gold-dark"></i> STEP 3: AVAILABLE BUDGET & PARAMETERS
+                            </h3>
+
+                            <div class="p-5 bg-white border-1.5 border-gold/50 shadow-sm space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <label for="budgetInput" class="font-sans text-[11px] uppercase tracking-widest text-emerald-deep font-bold flex items-center gap-2">
+                                        <i class="fa-solid fa-sack-dollar text-gold-dark"></i> Available Event Budget (LKR / Rs.)
+                                    </label>
+                                    <span class="font-calligraphy text-base text-gold-dark font-semibold">100% Flexible Budgeting</span>
+                                </div>
+                                
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gold-dark font-bold font-serif">Rs.</span>
+                                    <input type="text" id="budgetInput" value="1,500,000" placeholder="Type your budget e.g. 350,000 or 1,500,000" class="luxury-input-border w-full pl-12 pr-4 py-3 font-sans text-sm font-bold text-emerald-deep">
+                                </div>
+
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 font-sans text-[11px]">
+                                    <button type="button" onclick="setBudgetPreset('350,000')" class="px-2 py-2 bg-emerald-soft border border-gold/40 hover:border-gold hover:bg-emerald-deep hover:text-white text-emerald-deep font-semibold transition-all text-center">
+                                        Rs. 350,000
+                                    </button>
+                                    <button type="button" onclick="setBudgetPreset('750,000')" class="px-2 py-2 bg-emerald-soft border border-gold/40 hover:border-gold hover:bg-emerald-deep hover:text-white text-emerald-deep font-semibold transition-all text-center">
+                                        Rs. 750,000
+                                    </button>
+                                    <button type="button" onclick="setBudgetPreset('1,500,000')" class="px-2 py-2 bg-emerald-soft border border-gold/40 hover:border-gold hover:bg-emerald-deep hover:text-white text-emerald-deep font-semibold transition-all text-center">
+                                        Rs. 1,500,000
+                                    </button>
+                                    <button type="button" onclick="setBudgetPreset('3,000,000+')" class="px-2 py-2 bg-emerald-soft border border-gold/40 hover:border-gold hover:bg-emerald-deep hover:text-white text-emerald-deep font-semibold transition-all text-center">
+                                        Rs. 3,000,000+
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Guest Capacity -->
+                            <div>
+                                <label class="block font-sans text-[11px] uppercase tracking-widest text-emerald-deep font-semibold mb-2.5">Estimated Guest Count</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="guestPills">
+                                    <button type="button" class="guest-pill-btn py-2.5 px-2 border-1.5 border-gold bg-emerald-deep text-white text-xs font-semibold transition-all text-center shadow-sm" data-value="Intimate (< 50 Guests)">
+                                        &lt; 50 Guests
+                                    </button>
+                                    <button type="button" class="guest-pill-btn py-2.5 px-2 border border-gold/40 bg-white text-emerald-deep text-xs font-medium hover:border-gold transition-all text-center" data-value="Medium (50 - 150 Guests)">
+                                        50 – 150 Guests
+                                    </button>
+                                    <button type="button" class="guest-pill-btn py-2.5 px-2 border border-gold/40 bg-white text-emerald-deep text-xs font-medium hover:border-gold transition-all text-center" data-value="Large Gala (150 - 300 Guests)">
+                                        150 – 300 Guests
+                                    </button>
+                                    <button type="button" class="guest-pill-btn py-2.5 px-2 border border-gold/40 bg-white text-emerald-deep text-xs font-medium hover:border-gold transition-all text-center" data-value="Grand Gathering (300+ Guests)">
+                                        300+ Guests
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Preferred Slot -->
+                            <div>
+                                <label class="block font-sans text-[11px] uppercase tracking-widest text-emerald-deep font-semibold mb-2.5">Preferred Event Timing</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="timeSlotContainer">
+                                    <button type="button" class="time-slot-btn py-3 px-3 border-1.5 border-gold text-xs text-white bg-emerald-deep flex items-center justify-center gap-2 font-semibold transition-all shadow-sm" data-slot="Morning Function (10:00 AM)">
+                                        <i class="fa-solid fa-sun text-gold"></i> Morning (10:00 AM)
+                                    </button>
+                                    <button type="button" class="time-slot-btn py-3 px-3 border border-gold/40 text-xs text-emerald-deep hover:border-gold flex items-center justify-center gap-2 bg-white transition-all" data-slot="Evening Party (05:00 PM)">
+                                        <i class="fa-solid fa-cloud-sun text-gold-dark"></i> Evening (05:00 PM)
+                                    </button>
+                                    <button type="button" class="time-slot-btn py-3 px-3 border border-gold/40 text-xs text-emerald-deep hover:border-gold flex items-center justify-center gap-2 bg-white transition-all" data-slot="Night Reception (08:00 PM)">
+                                        <i class="fa-solid fa-moon text-gold-dark"></i> Night (08:00 PM)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right: Live VIP Summary Terminal -->
+                    <div class="lg:col-span-4 bg-white border-1.5 border-gold/60 p-6 md:p-8 shadow-card-light flex flex-col justify-between space-y-6 relative gold-corner-box lg:sticky lg:top-28">
+
+                        <div class="hidden print-header-show">
+                            <h1 class="font-serif text-2xl font-bold">EVENTURA LUXURY EVENT PLANNING</h1>
+                            <p class="text-xs font-sans">OFFICIAL BOOKING RESERVATION DRAFT</p>
+                            <hr class="my-3 border-emerald-deep">
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between pb-4 border-b border-gold/30">
+                                <div>
+                                    <p class="font-calligraphy text-xl text-gold-dark leading-none">Bespoke Atelier</p>
+                                    <h3 class="font-serif text-xl font-bold text-emerald-deep uppercase tracking-wider">Booking Spec</h3>
+                                </div>
+                                <span class="font-sans text-[10px] text-emerald-deep border border-gold px-2 py-0.5 bg-emerald-soft font-bold">VIP DRAFT</span>
+                            </div>
+
+                            <div class="space-y-4 text-xs font-sans">
+                                <div class="flex justify-between items-center py-2 border-b border-gold/15">
+                                    <span class="text-emerald-deep/70 uppercase font-semibold">Event Date:</span>
+                                    <span id="summaryDate" class="font-bold text-emerald-deep text-sm">October 24, 2026</span>
+                                </div>
+
+                                <div class="flex justify-between items-center py-2 border-b border-gold/15">
+                                    <span class="text-emerald-deep/70 uppercase font-semibold">Celebration:</span>
+                                    <span id="summaryEvent" class="font-bold text-emerald-deep">Grand Wedding</span>
+                                </div>
+
+                                <div class="flex justify-between items-center py-2 border-b border-gold/15">
+                                    <span class="text-emerald-deep/70 uppercase font-semibold">Specified Budget:</span>
+                                    <span id="summaryBudget" class="font-bold text-gold-dark text-sm">Rs. 1,500,000</span>
+                                </div>
+
+                                <div class="flex justify-between items-center py-2 border-b border-gold/15">
+                                    <span class="text-emerald-deep/70 uppercase font-semibold">Capacity:</span>
+                                    <span id="summaryGuests" class="text-emerald-deep font-semibold">&lt; 50 Guests</span>
+                                </div>
+
+                                <div class="flex justify-between items-center py-2 border-b border-gold/15">
+                                    <span class="text-emerald-deep/70 uppercase font-semibold">Time Slot:</span>
+                                    <span id="summarySlot" class="text-emerald-deep font-semibold">Morning (10:00 AM)</span>
+                                </div>
+
+                                <div class="flex justify-between items-center py-2 border-b border-gold/15">
+                                    <span class="text-emerald-deep/70 uppercase font-semibold">Planning Desk:</span>
+                                    <span class="text-emerald-deep font-bold">Eventura Lead Planner</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 pt-2 no-print font-sans">
+                            <button id="confirmReservationBtn" type="button" class="w-full py-4 bg-emerald-deep hover:bg-emerald text-white font-extrabold uppercase text-xs tracking-[0.2em] shadow-emerald-glow border border-gold transition-all duration-300">
+                                Confirm Draft Booking
+                            </button>
+
+                            <button type="button" onclick="window.print()" class="w-full py-3 border border-gold text-emerald-deep hover:bg-emerald-soft font-bold uppercase text-xs tracking-widest transition-all flex items-center justify-center gap-2 bg-white">
+                                <i class="fa-solid fa-print"></i> Print Draft Summary
+                            </button>
+
+                            <p class="text-[11px] text-emerald-deep/70 text-center flex items-center justify-center gap-1.5 font-medium">
+                                <i class="fa-solid fa-shield-halved text-gold-dark"></i> Direct VIP Booking Reservation
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact" class="py-24 px-6 relative bg-emerald-soft/40 border-t border-gold/30">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center space-y-3 mb-16">
+                    <p class="font-calligraphy text-3xl sm:text-4xl text-gold-dark font-normal">Inquiries & Concierge</p>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-emerald-deep tracking-wide">Contact Eventura Atelier</h2>
+                    <p class="text-emerald-deep/75 text-xs sm:text-sm max-w-xl mx-auto font-medium">
+                        Speak directly with our event directors to discuss date availability, custom decor styling, and flexible budget planning.
+                    </p>
+                    <div class="text-gold font-calligraphy text-2xl">~ ❖ ~</div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <div class="lg:col-span-5 space-y-5 font-sans">
+                        
+                        <div class="p-6 bg-white border-1.5 border-gold/40 hover:border-emerald transition-colors flex items-start gap-4 shadow-sm">
+                            <div class="w-12 h-12 bg-emerald-deep border border-gold flex items-center justify-center text-gold shrink-0">
+                                <i class="fa-solid fa-location-dot text-lg"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="font-serif font-bold text-emerald-deep text-base">Atelier Studio</h4>
+                                <p class="text-xs text-emerald-deep/75 leading-relaxed">
+                                   
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 bg-white border-1.5 border-gold/40 hover:border-emerald transition-colors flex items-start gap-4 shadow-sm">
+                            <div class="w-12 h-12 bg-emerald-deep border border-gold flex items-center justify-center text-gold shrink-0">
+                                <i class="fa-solid fa-phone text-lg"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="font-serif font-bold text-emerald-deep text-base">Hotline & WhatsApp Concierge</h4>
+                                <p class="text-xs text-emerald-deep/75">
+                                    <a href="tel:+94771234567" class="hover:text-gold-dark transition-colors font-semibold">+94 70 481 2147</a> / 
+                                    <a href="tel:+94112345678" class="hover:text-gold-dark transition-colors font-semibold">+94 74 020 8837</a>
+                                </p>
+                                <p class="text-[11px] text-emerald font-semibold"><i class="fa-brands fa-whatsapp text-emerald"></i> Direct WhatsApp Available</p>
+                            </div>
+                        </div>
+
+                        <div class="p-6 bg-white border-1.5 border-gold/40 hover:border-emerald transition-colors flex items-start gap-4 shadow-sm">
+                            <div class="w-12 h-12 bg-emerald-deep border border-gold flex items-center justify-center text-gold shrink-0">
+                                <i class="fa-solid fa-envelope text-lg"></i>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="font-serif font-bold text-emerald-deep text-base">Email Inquiries</h4>
+                                <p class="text-xs text-emerald-deep/75">
+                                    <a href="" class="hover:text-gold-dark transition-colors font-semibold"></a>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="lg:col-span-7 bg-white border-1.5 border-gold/50 p-8 shadow-card-light gold-corner-box">
+                        <div class="space-y-6">
+                            <div class="border-b border-gold/30 pb-4">
+                                <p class="font-calligraphy text-2xl text-gold-dark">We would love to hear from you</p>
+                                <h3 class="font-serif text-2xl font-bold text-emerald-deep">Send Direct Message</h3>
+                                <p class="text-xs text-emerald-deep/75 mt-1">Our planning team responds within 2 hours during consultation hours.</p>
+                            </div>
+
+                            <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-4 text-xs font-sans">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                               <label class="block uppercase tracking-widest text-emerald-deep font-bold mb-1.5">Your Name *</label>
+                                        <input type="text" required placeholder="e.g. Kasun Perera" class="luxury-input-border w-full p-3 text-emerald-deep font-medium">
+                                    </div>
+                                    <div>
+                                        <label class="block uppercase tracking-widest text-emerald-deep font-bold mb-1.5">Contact Number *</label>
+                                        <input type="tel" required placeholder="e.g. 077 123 4567" class="luxury-input-border w-full p-3 text-emerald-deep font-medium">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block uppercase tracking-widest text-emerald-deep font-bold mb-1.5">Email Address</label>
+                                        <input type="email" placeholder="e.g. kasun@gmail.com" class="luxury-input-border w-full p-3 text-emerald-deep font-medium">
+                                    </div>
+                                    <div>
+                                        <label class="block uppercase tracking-widest text-emerald-deep font-bold mb-1.5">Event Type</label>
+                                        <select class="luxury-input-border w-full p-3 text-emerald-deep font-medium">
+                                            <option value="Wedding">Wedding Celebration</option>
+                                            <option value="Birthday">Birthday Party</option>
+                                            <option value="Anniversary">Anniversary Gathering</option>
+                                            <option value="Private Party">Private Party / Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block uppercase tracking-widest text-emerald-deep font-bold mb-1.5">Message / Requirements</label>
+                                    <textarea rows="4" placeholder="Mention your preferred venue, estimated budget, or specific theme ideas..." class="luxury-input-border w-full p-3 text-emerald-deep font-medium"></textarea>
+                                </div>
+
+                                <button type="submit" class="w-full py-4 bg-emerald-deep hover:bg-emerald text-white font-extrabold uppercase text-xs tracking-[0.25em] border border-gold shadow-emerald-glow transition-all">
+                                    Send Inquiry Message
+                                </button>
+<form action="https://api.web3forms.com/submit" method="POST">
+  <!-- Insert your access key here -->
+  <input type="hidden" name="access_key" value="716cd51f-4f3c-4e20-a4ad-e335f9d1268d">
+
+                                <div id="contactSuccessMsg" class="hidden p-3 bg-emerald-soft border border-emerald text-emerald-deep text-center font-bold text-xs">
+                                    <i class="fa-solid fa-circle-check text-emerald"></i> Thank you! Your message has been received. Our senior planner will contact you shortly.
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-emerald-deep text-white border-t border-gold py-12 px-6 relative z-10 font-sans">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 border border-gold flex items-center justify-center bg-black text-gold font-calligraphy text-2xl">
+                    E
+                </div>
+                <span class="font-cinzel text-lg tracking-[0.2em] font-bold text-white">EVENTURA</span>
+            </div>
+
+            <p class="text-xs text-white/70 tracking-wider">
+                &copy; 2026 Eventura Luxury Event Planning Atelier. All Rights Reserved.
+            </p>
+
+            <div class="flex space-x-6 text-gold text-sm">
+                <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-white"><i class="fa-brands fa-pinterest"></i></a>
+                <a href="#" class="hover:text-white"><i class="fa-brands fa-facebook-f"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="detailsModal" class="fixed inset-0 bg-emerald-deep/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white border-1.5 border-gold max-w-2xl w-full p-8 relative shadow-luxury-gold gold-corner-box">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-emerald-deep hover:text-gold-dark text-xl font-sans">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modalContent" class="space-y-6"></div>
+        </div>
+    </div>
+
+    <div id="confirmationModal" class="fixed inset-0 bg-emerald-deep/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 font-sans">
+        <div class="bg-white border-1.5 border-gold max-w-lg w-full p-8 text-center space-y-6 relative shadow-luxury-gold gold-corner-box">
+
+            <div class="w-16 h-16 bg-emerald-deep border border-gold mx-auto flex items-center justify-center text-gold text-2xl shadow-emerald-glow">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+
+            <div class="space-y-1">
+                <p class="font-calligraphy text-2xl text-gold-dark">Bespoke Reservation Confirmed</p>
+                <h3 class="font-serif text-2xl font-bold text-emerald-deep">Booking Draft Saved</h3>
+            </div>
+
+            <p class="text-emerald-deep/80 text-xs leading-relaxed">
+                Your draft reservation for <span id="confirmedDateText" class="text-emerald-deep font-extrabold"></span> has been saved in our atelier system.
+            </p>
+
+            <div class="p-4 bg-emerald-soft border border-gold/40 text-left space-y-2 text-xs">
+                <div class="flex justify-between"><span class="text-emerald-deep/70">CELEBRATION:</span><span id="confirmedEventText" class="text-emerald-deep font-bold"></span></div>
+                <div class="flex justify-between"><span class="text-emerald-deep/70">SPECIFIED BUDGET:</span><span id="confirmedBudgetText" class="text-gold-dark font-bold"></span></div>
+                <div class="flex justify-between"><span class="text-emerald-deep/70">TIME SLOT:</span><span id="confirmedSlotText" class="text-emerald-deep font-bold"></span></div>
+                <div class="flex justify-between"><span class="text-emerald-deep/70">STATUS:</span><span class="text-emerald font-bold">READY TO PRINT</span></div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button type="button" onclick="window.print()" class="flex-1 py-3 border border-emerald text-emerald uppercase font-bold text-xs tracking-widest hover:bg-emerald-soft transition-colors flex items-center justify-center gap-2 bg-white">
+                    <i class="fa-solid fa-print"></i> Print Spec
+                </button>
+                <button type="button" onclick="closeConfirmationModal()" class="flex-1 py-3 bg-emerald-deep text-white uppercase font-bold text-xs tracking-widest hover:bg-emerald transition-colors border border-gold">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentDate = new Date(2026, 9, 1); // October 2026
+        let selectedDay = 24;
+        let selectedEventType = "Grand Wedding";
+        let expectedBudget = "1,500,000";
+        let selectedGuestCount = "Intimate (< 50 Guests)";
+        let selectedSlot = "Morning Function (10:00 AM)";
+
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        const eventData = {
+            wedding: {
+                title: "Grand Wedding Celebration",
+                desc: "A bespoke wedding planning service tailored around your exact budget scale. We specialize in floral stage settee styling, poruwa decor, lighting, and seamless day-of management.",
+                features: [
+                    "Custom Floral Stage & Settee Styling",
+                    "Complete DJ, Sound & Ambient Mood Lighting",
+                    "Poruwa & Entrance Arch Arrangements",
+                    "Dedicated On-Site Event Coordinator"
+                ]
+            },
+            birthday: {
+                title: "Milestone Birthday Party",
+                desc: "Unforgettable birthday parties for family and friends. Features vibrant thematic backdrops, sound setup, customized cake table styling, and photography support.",
+                features: [
+                    "Thematic Entrance & Stage Backdrop Decor",
+                    "Professional Sound & Music Setup",
+                    "Customized Cake & Dessert Table Styling",
+                    "Event Photography & Video Coverage Options"
+                ]
+            },
+            anniversary: {
+                title: "Anniversary Gathering",
+                desc: "Celebrate milestones with loved ones in an intimate setting complete with curated table decor, fairy lights, background acoustic music, and welcoming archways.",
+                features: [
+                    "Curated Table Decor & Chair Bow Linens",
+                    "Warm Ambient Fairy Lighting Setup",
+                    "Background Sound / Music System",
+                    "Customized Welcome Board & Table Props"
+                ]
+            },
+            private: {
+                title: "Private Party & Get-Together",
+                desc: "Stress-free private family parties and get-togethers with full setup, seating arrangements, buffet line coordination, and entertainment options.",
+                features: [
+                    "Complete Seating & Table Arrangement",
+                    "Catering & Buffet Line Coordination",
+                    "Sound System & Music Equipment",
+                    "Personalized Party Favors & Welcome Props"
+                ]
+            }
+        };
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            const monthYearElement = document.getElementById('currentMonthYear');
+            if (monthYearElement) {
+                monthYearElement.textContent = `${monthNames[month]} ${year}`;
+            }
+
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            const calendarDaysContainer = document.getElementById('calendarDays');
+            if (!calendarDaysContainer) return;
+
+            calendarDaysContainer.innerHTML = '';
+
+            for (let i = 0; i < firstDayIndex; i++) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'py-3 text-gray-300 text-xs font-light select-none';
+                emptyDiv.textContent = '';
+                calendarDaysContainer.appendChild(emptyDiv);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayBtn = document.createElement('button');
+                dayBtn.type = 'button';
+                dayBtn.textContent = day;
+
+                const isSelected = (day === selectedDay);
+
+                let baseClass = 'py-3 border text-xs font-bold transition-all duration-200 focus:outline-none flex flex-col items-center justify-center ';
+
+                if (isSelected) {
+                    baseClass += 'cal-day-active text-white font-black';
+                } else {
+                    baseClass += 'bg-white border-gold/30 text-emerald-deep hover:border-emerald hover:bg-emerald-soft/60';
+                }
+
+                dayBtn.className = baseClass;
+                dayBtn.onclick = () => {
+                    selectedDay = day;
+                    renderCalendar();
+                    updateSummary();
+                };
+
+                calendarDaysContainer.appendChild(dayBtn);
+            }
+        }
+
+        function selectQuickDate(dayType) {
+            const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dayOfWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), d).getDay();
+                if ((dayType === 'sat' && dayOfWeek === 6) || (dayType === 'sun' && dayOfWeek === 0)) {
+                    selectedDay = d;
+                    renderCalendar();
+                    updateSummary();
+                    break;
+                }
+            }
+        }
+
+        function setBudgetPreset(amount) {
+            expectedBudget = amount;
+            const input = document.getElementById('budgetInput');
+            if (input) {
+                input.value = amount;
+            }
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const monthStr = monthNames[currentDate.getMonth()];
+            const yearStr = currentDate.getFullYear();
+            const dateStr = `${monthStr} ${selectedDay}, ${yearStr}`;
+
+            const step1Text = document.getElementById('step1Text');
+            if (step1Text) step1Text.textContent = `${monthStr.substring(0, 3)} ${selectedDay}`;
+
+            const step2Text = document.getElementById('step2Text');
+            if (step2Text) step2Text.textContent = selectedEventType;
+
+            const step3Text = document.getElementById('step3Text');
+            if (step3Text) step3Text.textContent = (expectedBudget.includes('Rs') || expectedBudget.includes('LKR')) ? expectedBudget : `Rs. ${expectedBudget}`;
+
+            const summaryDate = document.getElementById('summaryDate');
+            if (summaryDate) summaryDate.textContent = dateStr;
+
+            const summaryEvent = document.getElementById('summaryEvent');
+            if (summaryEvent) summaryEvent.textContent = selectedEventType;
+
+            const summaryBudget = document.getElementById('summaryBudget');
+            if (summaryBudget) {
+                summaryBudget.textContent = (expectedBudget.includes('Rs') || expectedBudget.includes('LKR')) ? expectedBudget : `Rs. ${expectedBudget}`;
+            }
+
+            const summaryGuests = document.getElementById('summaryGuests');
+            if (summaryGuests) summaryGuests.textContent = selectedGuestCount;
+
+            const summarySlot = document.getElementById('summarySlot');
+            if (summarySlot) summarySlot.textContent = selectedSlot;
+        }
+
+        function setupEventListeners() {
+            const prevBtn = document.getElementById('prevMonth');
+            const nextBtn = document.getElementById('nextMonth');
+
+            if (prevBtn) {
+                prevBtn.onclick = () => {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    selectedDay = 1;
+                    renderCalendar();
+                    updateSummary();
+                };
+            }
+
+            if (nextBtn) {
+                nextBtn.onclick = () => {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    selectedDay = 1;
+                    renderCalendar();
+                    updateSummary();
+                };
+            }
+
+            const eventCards = document.querySelectorAll('.event-card-btn');
+            eventCards.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    eventCards.forEach(b => {
+                        b.classList.remove('border-1.5', 'border-gold', 'bg-emerald-deep', 'text-white');
+                        b.classList.add('border', 'border-gold/40', 'bg-white', 'text-emerald-deep');
+                    });
+                    btn.classList.remove('border', 'border-gold/40', 'bg-white', 'text-emerald-deep');
+                    btn.classList.add('border-1.5', 'border-gold', 'bg-emerald-deep', 'text-white');
+
+                    selectedEventType = btn.getAttribute('data-value');
+                    updateSummary();
+                });
+            });
+
+            const budgetInput = document.getElementById('budgetInput');
+            if (budgetInput) {
+                budgetInput.addEventListener('input', (e) => {
+                    expectedBudget = e.target.value.trim() || "1,500,000";
+                    updateSummary();
+                });
+            }
+
+            const guestPills = document.querySelectorAll('.guest-pill-btn');
+            guestPills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    guestPills.forEach(p => {
+                        p.classList.remove('border-1.5', 'border-gold', 'bg-emerald-deep', 'text-white');
+                        p.classList.add('border', 'border-gold/40', 'bg-white', 'text-emerald-deep');
+                    });
+                    pill.classList.remove('border', 'border-gold/40', 'bg-white', 'text-emerald-deep');
+                    pill.classList.add('border-1.5', 'border-gold', 'bg-emerald-deep', 'text-white');
+
+                    selectedGuestCount = pill.getAttribute('data-value');
+                    updateSummary();
+                });
+            });
+
+            const slotBtns = document.querySelectorAll('.time-slot-btn');
+            slotBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    slotBtns.forEach(s => {
+                        s.classList.remove('border-1.5', 'border-gold', 'bg-emerald-deep', 'text-white');
+                        s.classList.add('border', 'border-gold/40', 'bg-white', 'text-emerald-deep');
+                    });
+                    btn.classList.remove('border', 'border-gold/40', 'bg-white', 'text-emerald-deep');
+                    btn.classList.add('border-1.5', 'border-gold', 'bg-emerald-deep', 'text-white');
+
+                    selectedSlot = btn.getAttribute('data-slot');
+                    updateSummary();
+                });
+            });
+
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.onclick = () => {
+                    mobileMenu.classList.toggle('hidden');
+                };
+            }
+        }
+
+        function openModal(type) {
+            const data = eventData[type];
+            if (!data) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <p class="font-calligraphy text-2xl text-gold-dark">Bespoke Atelier</p>
+                <h3 class="font-serif text-3xl font-bold text-emerald-deep">${data.title}</h3>
+                <p class="text-emerald-deep/80 text-sm leading-relaxed">${data.desc}</p>
+                <div class="space-y-3 pt-4 border-t border-gold/30">
+                    <h4 class="font-cinzel text-xs uppercase tracking-widest text-emerald-deep font-bold">// INCLUDED SERVICES:</h4>
+                    <ul class="space-y-2 font-sans text-xs">
+                        ${data.features.map(f => `<li class="text-emerald-deep flex items-center gap-2"><i class="fa-solid fa-gem text-gold-dark text-[10px]"></i> ${f}</li>`).join('')}
+                    </ul>
+                </div>
+                <button type="button" onclick="closeModal(); document.getElementById('reserve').scrollIntoView();" class="w-full mt-6 py-3.5 bg-emerald-deep text-white uppercase font-sans font-bold text-xs tracking-widest hover:bg-emerald transition-colors border border-gold">
+                    RESERVE SLOT FOR THIS CELEBRATION
+                </button>
+            `;
+
+            const modal = document.getElementById('detailsModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailsModal');
+            if (!modal) return;
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        const confirmBtn = document.getElementById('confirmReservationBtn');
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', () => {
+                const year = currentDate.getFullYear();
+                const month = monthNames[currentDate.getMonth()];
+                
+                document.getElementById('confirmedDateText').textContent = `${month} ${selectedDay}, ${year}`;
+                document.getElementById('confirmedEventText').textContent = selectedEventType;
+                document.getElementById('confirmedBudgetText').textContent = (expectedBudget.includes('Rs') || expectedBudget.includes('LKR')) ? expectedBudget : `Rs. ${expectedBudget}`;
+                document.getElementById('confirmedSlotText').textContent = selectedSlot;
+
+                const modal = document.getElementById('confirmationModal');
+                modal.classList.remove('hidden');
+                setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            });
+        }
+
+        function closeConfirmationModal() {
+            const modal = document.getElementById('confirmationModal');
+            if (!modal) return;
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const msg = document.getElementById('contactSuccessMsg');
+            if (msg) {
+                msg.classList.remove('hidden');
+            }
+            e.target.reset();
+            setTimeout(() => {
+                if (msg) msg.classList.add('hidden');
+            }, 6000);
+        }
+
+        function animateCanvas() {
+            const canvas = document.getElementById('bgCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            const particles = Array.from({ length: 35 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 0.5,
+                alpha: Math.random() * 0.35 + 0.1,
+                speedY: Math.random() * 0.3 + 0.1,
+                speedX: (Math.random() - 0.5) * 0.2
+            }));
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(p => {
+                    p.y -= p.speedY;
+                    p.x += p.speedX;
+
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(20, 64, 51, ${p.alpha})`;
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(draw);
+            }
+
+            draw();
+        }
+
+        const calendarContainer = document.getElementById('calendarContainer');
+        if (calendarContainer) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        calendarContainer.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.15 });
+            observer.observe(calendarContainer);
+        }
+
+        window.onload = function () {
+            animateCanvas();
+            setupEventListeners();
+            renderCalendar();
+            updateSummary();
+        };
+    </script>
+</body>
+</html>
